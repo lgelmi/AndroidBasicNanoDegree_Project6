@@ -1,12 +1,9 @@
 package com.example.android.theappingtonpost;
 
 import android.annotation.SuppressLint;
-import android.content.res.Resources;
 import android.util.Log;
 
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -42,15 +39,11 @@ public class News {
     /**
      * An Url to a useful image to be displayed with the news.
      */
-    private URL thumbnail;
+    private String thumbnail;
     /**
      * The url to the news page.
      */
-    private URL url;
-    /**
-     * A score assigned to the news.
-     */
-    private int rating = 1;
+    private String url;
 
     public String getAuthor() {
         return author;
@@ -103,39 +96,23 @@ public class News {
         }
     }
 
-    public URL getThumbnail() {
+    public String getThumbnail() {
         return thumbnail;
     }
 
-    public void setThumbnail(URL thumbnail) {
+    public void setThumbnail(String thumbnail){
         this.thumbnail = thumbnail;
     }
 
-    public void setThumbnail(String thumbnail) throws MalformedURLException {
-        this.thumbnail = new URL(thumbnail);
-    }
-
-    public URL getUrl() {
+    public String getUrl() {
         return url;
     }
 
-    public void setUrl(URL url) {
+    public void setUrl(String url) {
         this.url = url;
     }
 
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-
-    public void setRating(String rating) {
-        this.rating = Integer.parseInt(rating);
-    }
-
-    public News(String headline) {
+    News(String headline) {
         setHeadline(headline);
     }
 }

@@ -3,13 +3,6 @@
     <color name="colorPrimary">#0d7cad</color>
     <color name="colorPrimaryDark">#a8d8f2</color>
 
-    <!-- Color for a Rating from 0 to 5 -->
-    <color name="rating1">#10CAC9</color>
-    <color name="rating2">#3dd916</color>
-    <color name="rating3">#d9d216</color>
-    <color name="rating4">#ED8A19</color>
-    <color name="rating5">#D93218</color>
-
     <!-- Text color for the body related article item parts -->
     <color name="textColorBody">#2B3D4D</color>
     <!-- Text color for the detail related article item parts -->
