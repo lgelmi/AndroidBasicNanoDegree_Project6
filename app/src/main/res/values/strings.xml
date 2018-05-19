@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">The Appington Post</string>
+    <!-- List Descriptor-->
+    <string name="dateTimeFormat">LLL dd, yyyy - h:mm a</string>
+</resources>

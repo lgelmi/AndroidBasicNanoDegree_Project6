@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Height of each list item -->
+    <dimen name="item_size">72dp</dimen>
+    <!-- Text Sizes-->
+    <dimen name="date_size">14sp</dimen>
+    <dimen name="heading_size">24sp</dimen>
+    <dimen name="section_size">20sp</dimen>
+    <dimen name="trail_size">16sp</dimen>
+    <!-- Size for a star Rating from 0 to 5 -->
+    <dimen name="rating1">12dp</dimen>
+    <dimen name="rating2">18dp</dimen>
+    <dimen name="rating3">24dp</dimen>
+    <dimen name="rating4">30dp</dimen>
+    <dimen name="rating5">36dp</dimen>
+    <!-- Paddings -->
+    <dimen name="standard_padding">8dp</dimen>
+    <dimen name="kilo_padding">16dp</dimen>
+</resources>
