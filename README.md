@@ -7,4 +7,4 @@ Beside what required by the project rubric, the main features are:
 * Swipe for update: as in many other apps, swiping up will update the news.
 * Thumbnils: each news is associated with an image kindly offered by the guardian.
 
-**N.B.:** The /credits.txt files stores all resource original sources.
+**N.B.:** The /Credits.txt file stores all resource original sources.
