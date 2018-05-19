@@ -67,7 +67,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
      */
     private void setTextAndVisibility(TextView textview, String text){
         if (text.equals(""))
-            textview.setVisibility(View.INVISIBLE);
+            textview.setVisibility(View.GONE);
         else{
             textview.setVisibility(View.VISIBLE);
             textview.setText(text);

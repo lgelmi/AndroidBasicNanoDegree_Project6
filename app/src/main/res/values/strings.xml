@@ -5,4 +5,10 @@
     <string name="starDescription">An evaluation of the news impact.</string>
     <string name="thumbnailDescription">An image describing the news.</string>
     <string name="guardianDateFormat">yyyy-MM-dd\'T\'HH:mm:ss\'Z\'</string>
+
+    <!-- Fallback texts -->
+    <string name="loadingText">Retrieving news from server.</string>
+    <string name="emptyText">No news found.</string>
+    <string name="noConnection">No connection available!</string>
+
 </resources>
