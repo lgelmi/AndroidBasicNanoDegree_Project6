@@ -3,3 +3,7 @@ https://open-platform.theguardian.com/
 
 App Icon:
 https://www.flaticon.com/free-icon/newspaper_148985
+Star original SVG:
+https://www.flaticon.com/free-icon/star_148839
+	To xml with 
+	http://inloop.github.io/svg2android/

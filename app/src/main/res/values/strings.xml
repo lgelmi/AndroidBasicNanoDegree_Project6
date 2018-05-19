@@ -2,4 +2,6 @@
     <string name="app_name">The Appington Post</string>
     <!-- List Descriptor-->
     <string name="dateTimeFormat">LLL dd, yyyy - h:mm a</string>
+    <string name="starDescription">An evaluation of the news impact.</string>
+    <string name="thumbailDescription">An image describing the news.</string>
 </resources>
