@@ -8,6 +8,20 @@
     android:layout_margin="@dimen/standard_padding">
 
     <TextView
+        android:id="@+id/headline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/standard_padding"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/textColorBody"
+        android:textSize="@dimen/heading_size"
+        app:layout_constraintBottom_toTopOf="@+id/trailText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/thumbnail"
+        app:layout_constraintTop_toBottomOf="@+id/sectionName"
+        tools:text="This is a great news" />
+
+    <TextView
         android:id="@+id/sectionName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -23,18 +37,28 @@
         tools:text="Tricks and Trips" />
 
     <TextView
-        android:id="@+id/headline"
-        android:layout_width="0dp"
+        android:id="@+id/author"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/standard_padding"
-        android:layout_marginStart="8dp"
-        android:textColor="@color/textColorBody"
-        android:textSize="@dimen/heading_size"
-        app:layout_constraintBottom_toTopOf="@+id/trailText"
+        android:textColor="@color/textColorDetails"
+        android:textSize="@dimen/date_size"
+        tools:text="Lorenzo Gelmi"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/thumbail"
-        app:layout_constraintTop_toBottomOf="@+id/sectionName"
-        tools:text="This is a great news" />
+
+        app:layout_constraintTop_toBottomOf="@+id/trailText"/>
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/standard_padding"
+        android:textColor="@color/textColorDetails"
+        android:textSize="@dimen/date_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/author"
+        tools:text="@string/dateTimeFormat" />
 
     <TextView
         android:id="@+id/trailText"
@@ -44,45 +68,32 @@
         android:layout_marginStart="@dimen/standard_padding"
         android:textColor="@color/textColorBody"
         android:textSize="@dimen/trail_size"
-        app:layout_constraintBottom_toTopOf="@+id/date"
+        app:layout_constraintBottom_toTopOf="@+id/author"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/headline"
         app:layout_constraintTop_toBottomOf="@+id/headline"
         tools:text="A great news indeed from the app world: apparently there are many news!" />
 
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/standard_padding"
-        android:layout_marginStart="@dimen/standard_padding"
-        android:textColor="@color/textColorDetails"
-        android:textSize="@dimen/date_size"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trailText"
-        tools:text="@string/dateTimeFormat" />
-
     <ImageView
         android:id="@+id/rating"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/rating5"
         android:layout_height="0dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:contentDescription="@string/starDescription"
-        app:layout_constraintBottom_toTopOf="@+id/thumbail"
-        app:layout_constraintEnd_toEndOf="@+id/thumbail"
-        app:layout_constraintStart_toStartOf="@+id/thumbail"
+        app:layout_constraintBottom_toTopOf="@+id/thumbnail"
+        app:layout_constraintEnd_toEndOf="@+id/thumbnail"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/headline"
         app:srcCompat="@drawable/star" />
 
     <ImageView
-        android:id="@+id/thumbail"
+        android:id="@+id/thumbnail"
         android:layout_width="@dimen/thumb_size"
         android:layout_height="0dp"
         android:layout_marginBottom="@dimen/standard_padding"
         android:layout_marginTop="@dimen/standard_padding"
-        android:contentDescription="@string/thumbailDescription"
+        android:contentDescription="@string/thumbnailDescription"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rating"

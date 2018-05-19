@@ -8,10 +8,10 @@
     <dimen name="section_size">14sp</dimen>
     <dimen name="trail_size">16sp</dimen>
     <!-- Size for a star Rating from 0 to 5 -->
-    <dimen name="rating1">6dp</dimen>
-    <dimen name="rating2">12dp</dimen>
-    <dimen name="rating3">18dp</dimen>
-    <dimen name="rating4">24dp</dimen>
+    <dimen name="rating1">18dp</dimen>
+    <dimen name="rating2">21dp</dimen>
+    <dimen name="rating3">24dp</dimen>
+    <dimen name="rating4">27dp</dimen>
     <dimen name="rating5">30dp</dimen>
     <!-- Paddings -->
     <dimen name="standard_padding">8dp</dimen>
