@@ -9,5 +9,37 @@
     <string name="loadingText">Retrieving news from server.</string>
     <string name="emptyText">No news found.</string>
     <string name="noConnection">No connection available!</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+    <string name="settings_title">Appington Settings</string>
+    <string name="settings_menu_item">Settings</string>
+
+    <!-- Strings For Order-By Preference -->
+    <string name="settings_order_by_label">Order By</string>
+    <string name="settings_order_by_key" translatable="false">order-by</string>
+    <string name="settings_order_by_default" translatable="false">@string/settings_order_by_newest_value</string>
+    <!-- Label for order-by magnitude option [CHAR LIMIT=20] -->
+    <string name="settings_order_by_newest_label">Newest</string>
+    <string name="settings_order_by_newest_value" translatable="false">newest</string>
+
+    <!-- Label for order-by most recent option [CHAR LIMIT=20] -->
+    <string name="settings_order_by_oldest_label">Oldest</string>
+    <string name="settings_order_by_oldest_value" translatable="false">oldest</string>
+
+    <!-- Strings For Section Preference -->
+    <string name="settings_section_label">Section</string>
+    <string name="settings_section_key" translatable="false">section</string>
+    <string name="settings_section_none_label" translatable="false">No Filter</string>
+    <string name="settings_section_none_value" translatable="false">NoFilter</string>
+
+    <!-- Strings For Page Size Preference -->
+    <string name="settings_page_size_label">Page Size</string>
+    <string name="settings_page_size_key" translatable="false">page-size</string>
+    <string name="settings_page_size_default" translatable="false">20</string>
+    <string name="settings_page_size_min" translatable="false">1</string>
+    <string name="settings_page_size_max" translatable="false">50</string>
+
+
 
 </resources>

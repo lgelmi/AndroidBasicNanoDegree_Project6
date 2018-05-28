@@ -9,18 +9,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-public class NewsLoader extends AsyncTaskLoader<List<News>> {
+public class SectionLoader extends AsyncTaskLoader<ArrayList<Map.Entry<String, String>>> {
 
-    /** Tag for log messages */
+    /**
+     * Tag for log messages
+     */
     private static final String TAG = SectionLoader.class.getName();
 
     private String requestUrl;
 
 
-    NewsLoader(Context context, String url) {
+    SectionLoader(Context context, String url) {
         super(context);
         requestUrl = url;
     }
@@ -31,13 +35,13 @@ public class NewsLoader extends AsyncTaskLoader<List<News>> {
     }
 
     @Override
-    public List<News> loadInBackground() {
+    public ArrayList<Map.Entry<String, String>> loadInBackground() {
         if (requestUrl == null)
             return null;
-        return fetchNews();
+        return fetchSections();
     }
 
-    private List<News> fetchNews(){
+    private ArrayList<Map.Entry<String, String>> fetchSections() {
         // Store the response in a News List and return it
         return extractFeatureFromJson(QueryUtils.fetchUrl(requestUrl));
     }
@@ -46,13 +50,13 @@ public class NewsLoader extends AsyncTaskLoader<List<News>> {
      * Return a list of {@link News} objects that has been built up from
      * parsing the given JSON response.
      */
-    private List<News> extractFeatureFromJson(String newsJSON) {
+    private ArrayList<Map.Entry<String, String>> extractFeatureFromJson(String newsJSON) {
         // If the JSON string is empty or null, then return early.
         if (TextUtils.isEmpty(newsJSON)) {
             return null;
         }
         // Create an empty ArrayList that we can start adding earthquakes to
-        List<News> news = new ArrayList<>();
+        ArrayList<Map.Entry<String, String>> news = new ArrayList<>();
         // Try to parse the JSON response string. If there's a problem with the way the JSON
         // is formatted, a JSONException exception object will be thrown.
         // Catch the exception so the app doesn't crash, and print the error message to the logs.
@@ -65,34 +69,14 @@ public class NewsLoader extends AsyncTaskLoader<List<News>> {
             // which represents a list of features.
             JSONArray newsArray = baseJsonResponse.getJSONArray("results");
 
-            // For each news, create a News object
+            // Add each section
             for (int i = 0; i < newsArray.length(); i++) {
 
                 // Get a single news at position i within the list
-                JSONObject currentNews = newsArray.getJSONObject(i);
-
-                // For a given news, extract the JSONObject associated with the
-                // key called "fields", collecting several news data.
-                JSONObject fields = currentNews.getJSONObject("fields");
-
-                // Extract the value for the key called "headline" and initialize the News
-                News newNews = new News(fields.getString("headline"));
-                newNews.setSection(currentNews.getString("sectionName"));
-                newNews.setTrailText(fields.getString("trailText"));
-                if (fields.has("thumbnail"))
-                    newNews.setThumbnail(fields.getString("thumbnail"));
-                newNews.setDate(currentNews.getString("webPublicationDate"), getContext().getResources().getString(R.string.guardianDateFormat));
-
-                List<String> authors = new ArrayList<>();
-                JSONArray tags = currentNews.getJSONArray("tags");
-                for (int j = 0; j < tags.length(); j++){
-                    JSONObject tag = tags.getJSONObject(j);
-                    if (tag.getString("type").equals("contributor"))
-                        authors.add(tag.getString("webTitle"));
-                }
-                newNews.setAuthor(TextUtils.join(", ", authors));
-                newNews.setUrl(currentNews.getString("webUrl"));
-                news.add(newNews);
+                JSONObject currentSection = newsArray.getJSONObject(i);
+                String id = currentSection.getString("id");
+                String webTitle = currentSection.getString("webTitle");
+                news.add(new AbstractMap.SimpleEntry<>(id, webTitle));
             }
 
         } catch (JSONException e) {

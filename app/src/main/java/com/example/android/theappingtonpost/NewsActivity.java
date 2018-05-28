@@ -4,12 +4,16 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -17,16 +21,19 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+import java.util.Map;
 
 
-public class NewsActivity extends AppCompatActivity implements LoaderManager
-        .LoaderCallbacks<List<News>> {
+public class NewsActivity extends AppCompatActivity implements SharedPreferences
+        .OnSharedPreferenceChangeListener {
 
     @SuppressWarnings("unused")
     public static final String TAG = NewsActivity.class.getName();
+
+    static String KEY = "d612ada5-8086-4a49-b724-cb851b978c2b";
 
     private NewsAdapter adapter;
 
@@ -34,6 +41,10 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager
      * Constant value for the news loader ID.
      */
     private static final int NEWS_LOADER_ID = 404;
+    /**
+     * Constant value for the news loader ID.
+     */
+    private static final int SECTION_LOADER_ID = 405;
 
     // View PARTS
     ListView newsListView;
@@ -41,17 +52,8 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager
     TextView fallbackView;
     SwipeRefreshLayout swipeView;
 
-    // URL PARTS
-    static String KEY = "d612ada5-8086-4a49-b724-cb851b978c2b";
-    static int PAGE_SIZE = 20;
-    static String ORDER = "last-modified";
-    /**
-     * URL for news data from the guardian api
-     */
-    private final String GUARDIAN_REQUEST_URL = String.format(Locale.US,
-            "https://content.guardianapis" +
-                    ".com/search?api-key=%s&page-size=%d&show-tags=contributor&order-date=%s" +
-                    "&show-fields=headline,thumbnail,trailText", KEY, PAGE_SIZE, ORDER);
+    ArrayList<Map.Entry<String, String>> mSections;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +70,14 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
         newsListView.setAdapter(adapter);
+        LoaderManager loaderManager = getLoaderManager();
+        loaderManager.restartLoader(SECTION_LOADER_ID, null, new SectionCallback(this));
+        // Obtain a reference to the SharedPreferences file for this app
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        // And register to be notified of preference changes
+        // So we know when the user has adjusted the query settings
+        prefs.registerOnSharedPreferenceChangeListener(this);
+
         fetchData();
 
         newsListView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -132,7 +142,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager
             loadingView.setVisibility(View.VISIBLE);
             fallbackView.setText(getString(R.string.loadingText));
             LoaderManager loaderManager = getLoaderManager();
-            loaderManager.restartLoader(NEWS_LOADER_ID, null, this);
+            loaderManager.restartLoader(NEWS_LOADER_ID, null, new NewsCallback(this));
         } else {
             // Otherwise, display error
             loadingView.setVisibility(View.GONE);
@@ -141,31 +151,138 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager
     }
 
     @Override
-    public Loader<List<News>> onCreateLoader(int i, Bundle bundle) {
-        // Create a new loader for the given URL
-        return new NewsLoader(this, GUARDIAN_REQUEST_URL);
+    public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+        fetchData();
     }
 
     @Override
-    public void onLoadFinished(Loader<List<News>> loader, List<News> news) {
-        adapter.clear();
-        // Sets the visibility according to the new state
-        loadingView.setVisibility(View.GONE);
-        if (news == null || news.size() == 0) {
-            // No news found!
-            fallbackView.setVisibility(View.VISIBLE);
-            fallbackView.setText(getString(R.string.emptyText));
-        } else {
-            // News found!
-            newsListView.setVisibility(View.VISIBLE);
-            fallbackView.setVisibility(View.GONE);
-            adapter.addAll(news);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            Bundle extras = new Bundle();
+            extras.putParcelableArray(getString(R.string.settings_section_key), mSections);
+            startActivity(settingsIntent);
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onLoaderReset(Loader<List<News>> loader) {
-        // Loader reset, so we can clear out our existing data.
-        adapter.clear();
+    private void sectionClear() {
+        mSections = new ArrayList<>();
+        mSections.add(new AbstractMap.SimpleEntry<>(getString(R.string
+                .settings_section_none_value), getString(R.string.settings_section_none_label)));
+
     }
+
+    private class NewsCallback implements LoaderManager.LoaderCallbacks<List<News>> {
+
+        Context mContext;
+
+        NewsCallback(Context context) {
+            super();
+            mContext = context;
+        }
+
+        @Override
+        public Loader<List<News>> onCreateLoader(int i, Bundle bundle) {
+
+            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+            // URL PARTS
+            String orderBy = sharedPrefs.getString(getString(R.string.settings_order_by_key),
+                    getString(R.string.settings_order_by_default));
+            String pageSize = sharedPrefs.getString(getString(R.string.settings_page_size_key),
+                    getString(R.string.settings_page_size_default));
+            String section = sharedPrefs.getString(getString(R.string.settings_section_key),
+                    getString(R.string.settings_section_none_value));
+
+
+            // URL for news data from the guardian api
+            String GUARDIAN_REQUEST_URL = "https://content.guardianapis" +
+                    ".com/search?show-tags=contributor&show-fields=headline," +
+                    "thumbnail,trailText";
+
+            Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
+            Uri.Builder uriBuilder = baseUri.buildUpon();
+            uriBuilder.appendQueryParameter("api-key", KEY);
+            uriBuilder.appendQueryParameter(getString(R.string.settings_page_size_key), pageSize);
+            uriBuilder.appendQueryParameter(getString(R.string.settings_order_by_key), orderBy);
+            if (!section.equals(getString(R.string.settings_section_none_value))) {
+                uriBuilder.appendQueryParameter(getString(R.string.settings_section_key), section);
+            }
+            // Create a new loader for the given URL
+            return new NewsLoader(mContext, uriBuilder.toString());
+        }
+
+        @Override
+        public void onLoadFinished(Loader<List<News>> loader, List<News> news) {
+            adapter.clear();
+            // Sets the visibility according to the new state
+            loadingView.setVisibility(View.GONE);
+            if (news == null || news.size() == 0) {
+                // No news found!
+                fallbackView.setVisibility(View.VISIBLE);
+                fallbackView.setText(getString(R.string.emptyText));
+            } else {
+                // News found!
+                newsListView.setVisibility(View.VISIBLE);
+                fallbackView.setVisibility(View.GONE);
+                adapter.addAll(news);
+            }
+        }
+
+        @Override
+        public void onLoaderReset(Loader<List<News>> loader) {
+            // Loader reset, so we can clear out our existing data.
+            adapter.clear();
+        }
+
+    }
+
+    /**
+     * A LoaderManager with the purpose of reading the available sections from the server.
+     * This won't need to be refreshed as (hopefully) sections don't change a lot.
+     */
+    private class SectionCallback implements LoaderManager.LoaderCallbacks<ArrayList<Map
+            .Entry<String, String>>> {
+
+        Context mContext;
+
+        SectionCallback(Context context) {
+            super();
+            mContext = context;
+        }
+
+        @Override
+        public Loader<ArrayList<Map.Entry<String, String>>> onCreateLoader(int i, Bundle bundle) {
+            //URL for news data from the guardian api
+            String GUARDIAN_SECTION_URL = "https://content.guardianapis.com/sections?";
+            Uri baseUri = Uri.parse(GUARDIAN_SECTION_URL);
+            Uri.Builder uriBuilder = baseUri.buildUpon();
+            uriBuilder.appendQueryParameter("api-key", KEY);
+            // Create a new loader for the given URL
+            return new SectionLoader(mContext, uriBuilder.toString());
+        }
+
+        @Override
+        public void onLoadFinished(Loader<ArrayList<Map.Entry<String, String>>> loader,
+                                   ArrayList<Map.Entry<String, String>> sections) {
+            sectionClear();
+            mSections.addAll(sections);
+        }
+
+        @Override
+        public void onLoaderReset(Loader<ArrayList<Map.Entry<String, String>>> loader) {
+            // Loader reset, so we can clear out our existing data.
+            sectionClear();
+        }
+
+    }
+
 }
