@@ -9,5 +9,4 @@
     <dimen name="trail_size">16sp</dimen>
     <!-- Paddings -->
     <dimen name="standard_padding">8dp</dimen>
-    <dimen name="kilo_padding">16dp</dimen>
 </resources>

@@ -15,9 +15,9 @@ import java.util.List;
 public class NewsLoader extends AsyncTaskLoader<List<News>> {
 
     /** Tag for log messages */
-    private static final String TAG = SectionLoader.class.getName();
+    private static final String TAG = NewsLoader.class.getName();
 
-    private String requestUrl;
+    private final String requestUrl;
 
 
     NewsLoader(Context context, String url) {

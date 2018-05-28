@@ -9,7 +9,6 @@
     <string name="loadingText">Retrieving news from server.</string>
     <string name="emptyText">No news found.</string>
     <string name="noConnection">No connection available!</string>
-    <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->
     <string name="settings_title">Appington Settings</string>
@@ -32,6 +31,78 @@
     <string name="settings_section_key" translatable="false">section</string>
     <string name="settings_section_none_label" translatable="false">No Filter</string>
     <string name="settings_section_none_value" translatable="false">NoFilter</string>
+    <string name="settings_section_about_label" translatable="false">About</string>
+    <string name="settings_section_about_value" translatable="false">about</string>
+    <string name="settings_section_animals_label" translatable="false">Animals farmed</string>
+    <string name="settings_section_animals_value" translatable="false">animals-farmed</string>
+    <string name="settings_section_artanddesign_label" translatable="false">Art and design</string>
+    <string name="settings_section_artanddesign_value" translatable="false">artanddesign</string>
+    <string name="settings_section_australia_label" translatable="false">Australia news</string>
+    <string name="settings_section_australia_value" translatable="false">australia-news</string>
+    <string name="settings_section_better_label" translatable="false">"Better Business</string>
+    <string name="settings_section_better_value" translatable="false">better-business</string>
+    <string name="settings_section_books_label" translatable="false">Books</string>
+    <string name="settings_section_books_value" translatable="false">books</string>
+    <string name="settings_section_business_label" translatable="false">Business</string>
+    <string name="settings_section_business_value" translatable="false">business</string>
+    <string name="settings_section_childrens_label" translatable="false">Children\'s books</string>
+    <string name="settings_section_childrens_value" translatable="false">childrens</string>
+    <string name="settings_section_cities_label" translatable="false">Cities</string>
+    <string name="settings_section_cities_value" translatable="false">cities</string>
+    <string name="settings_section_commentisfree_label" translatable="false">Opinion</string>
+    <string name="settings_section_commentisfree_value" translatable="false">commentisfree</string>
+    <string name="settings_section_community_label" translatable="false">Community</string>
+    <string name="settings_section_community_value" translatable="false">community</string>
+    <string name="settings_section_crosswords_label" translatable="false">Crosswords</string>
+    <string name="settings_section_crosswords_value" translatable="false">crosswords</string>
+    <string name="settings_section_culture_label" translatable="false">Culture</string>
+    <string name="settings_section_culture_value" translatable="false">culture</string>
+    <string name="settings_section_education_label" translatable="false">Education</string>
+    <string name="settings_section_education_value" translatable="false">education</string>
+    <string name="settings_section_environment_label" translatable="false">Environment</string>
+    <string name="settings_section_environment_value" translatable="false">environment</string>
+    <string name="settings_section_extra_label" translatable="false">Extra</string>
+    <string name="settings_section_extra_value" translatable="false">extra</string>
+    <string name="settings_section_fashion_label" translatable="false">Fashion</string>
+    <string name="settings_section_fashion_value" translatable="false">fashion</string>
+    <string name="settings_section_film_label" translatable="false">Film</string>
+    <string name="settings_section_film_value" translatable="false">film</string>
+    <string name="settings_section_football_label" translatable="false">Football</string>
+    <string name="settings_section_football_value" translatable="false">football</string>
+    <string name="settings_section_games_label" translatable="false">Games</string>
+    <string name="settings_section_games_value" translatable="false">games</string>
+    <string name="settings_section_inequality_label" translatable="false">Inequality</string>
+    <string name="settings_section_inequality_value" translatable="false">inequality</string>
+    <string name="settings_section_jobsadvice_label" translatable="false">Jobs</string>
+    <string name="settings_section_jobsadvice_value" translatable="false">jobsadvice</string>
+    <string name="settings_section_law_label" translatable="false">Law</string>
+    <string name="settings_section_law_value" translatable="false">law</string>
+    <string name="settings_section_lifeandstyle_label" translatable="false">Life and style</string>
+    <string name="settings_section_lifeandstyle_value" translatable="false">lifeandstyle</string>
+    <string name="settings_section_media_label" translatable="false">Media</string>
+    <string name="settings_section_media_value" translatable="false">media</string>
+    <string name="settings_section_money_label" translatable="false">Money</string>
+    <string name="settings_section_money_value" translatable="false">money</string>
+    <string name="settings_section_music_label" translatable="false">Music</string>
+    <string name="settings_section_music_value" translatable="false">music</string>
+    <string name="settings_section_news_label" translatable="false">News</string>
+    <string name="settings_section_news_value" translatable="false">news</string>
+    <string name="settings_section_politics_label" translatable="false">Politics</string>
+    <string name="settings_section_politics_value" translatable="false">politics</string>
+    <string name="settings_section_science_label" translatable="false">Science</string>
+    <string name="settings_section_science_value" translatable="false">science</string>
+    <string name="settings_section_society_label" translatable="false">Society</string>
+    <string name="settings_section_society_value" translatable="false">society</string>
+    <string name="settings_section_sport_label" translatable="false">Sport</string>
+    <string name="settings_section_sport_value" translatable="false">sport</string>
+    <string name="settings_section_technology_label" translatable="false">Technology</string>
+    <string name="settings_section_technology_value" translatable="false">technology</string>
+    <string name="settings_section_tv_label" translatable="false">Television-radio</string>
+    <string name="settings_section_tv_value" translatable="false">tv-and-radio</string>
+    <string name="settings_section_weather_label" translatable="false">Weather</string>
+    <string name="settings_section_weather_value" translatable="false">weather</string>
+    <string name="settings_section_world_label" translatable="false">World news</string>
+    <string name="settings_section_world_value" translatable="false">world</string>
 
     <!-- Strings For Page Size Preference -->
     <string name="settings_page_size_label">Page Size</string>

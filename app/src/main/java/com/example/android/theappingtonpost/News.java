@@ -3,7 +3,6 @@ package com.example.android.theappingtonpost;
 import android.annotation.SuppressLint;
 import android.util.Log;
 
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,7 +14,7 @@ public class News {
     /**
      * The tag used in case of log messages.
      */
-    private String TAG = News.class.getName();
+    private final String TAG = News.class.getName();
     /**
      * The article author.
      */
@@ -79,10 +78,6 @@ public class News {
 
     public Date getDate() {
         return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public void setDate(String date, String format) {

@@ -10,12 +10,8 @@ import android.text.Spanned;
  * .com/2016/04/07/set-minimum-maximum-value-in-edittext-android/
  */
 public class MinMaxFilter implements InputFilter {
-    private int mIntMin, mIntMax;
-
-    public MinMaxFilter(int minValue, int maxValue) {
-        this.mIntMin = minValue;
-        this.mIntMax = maxValue;
-    }
+    private final int mIntMin;
+    private final int mIntMax;
 
     public MinMaxFilter(String minValue, String maxValue) {
         this.mIntMin = Integer.parseInt(minValue);

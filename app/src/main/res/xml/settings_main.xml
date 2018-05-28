@@ -18,6 +18,8 @@
 
     <ListPreference
         android:defaultValue="@string/settings_section_none_label"
+        android:entries="@array/settings_sections_labels"
+        android:entryValues="@array/settings_sections_values"
         android:key="@string/settings_section_key"
         android:title="@string/settings_section_label" />
 

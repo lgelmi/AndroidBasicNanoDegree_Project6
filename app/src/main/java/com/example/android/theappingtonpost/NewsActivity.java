@@ -21,10 +21,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 public class NewsActivity extends AppCompatActivity implements SharedPreferences
@@ -33,7 +31,7 @@ public class NewsActivity extends AppCompatActivity implements SharedPreferences
     @SuppressWarnings("unused")
     public static final String TAG = NewsActivity.class.getName();
 
-    static String KEY = "d612ada5-8086-4a49-b724-cb851b978c2b";
+    private static final String KEY = "d612ada5-8086-4a49-b724-cb851b978c2b";
 
     private NewsAdapter adapter;
 
@@ -41,19 +39,12 @@ public class NewsActivity extends AppCompatActivity implements SharedPreferences
      * Constant value for the news loader ID.
      */
     private static final int NEWS_LOADER_ID = 404;
-    /**
-     * Constant value for the news loader ID.
-     */
-    private static final int SECTION_LOADER_ID = 405;
 
     // View PARTS
-    ListView newsListView;
-    ProgressBar loadingView;
-    TextView fallbackView;
-    SwipeRefreshLayout swipeView;
-
-    ArrayList<Map.Entry<String, String>> mSections;
-
+    private ListView newsListView;
+    private ProgressBar loadingView;
+    private TextView fallbackView;
+    private SwipeRefreshLayout swipeView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +61,6 @@ public class NewsActivity extends AppCompatActivity implements SharedPreferences
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
         newsListView.setAdapter(adapter);
-        LoaderManager loaderManager = getLoaderManager();
-        loaderManager.restartLoader(SECTION_LOADER_ID, null, new SectionCallback(this));
         // Obtain a reference to the SharedPreferences file for this app
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         // And register to be notified of preference changes
@@ -166,24 +155,15 @@ public class NewsActivity extends AppCompatActivity implements SharedPreferences
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             Intent settingsIntent = new Intent(this, SettingsActivity.class);
-            Bundle extras = new Bundle();
-            extras.putParcelableArray(getString(R.string.settings_section_key), mSections);
             startActivity(settingsIntent);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void sectionClear() {
-        mSections = new ArrayList<>();
-        mSections.add(new AbstractMap.SimpleEntry<>(getString(R.string
-                .settings_section_none_value), getString(R.string.settings_section_none_label)));
-
-    }
-
     private class NewsCallback implements LoaderManager.LoaderCallbacks<List<News>> {
 
-        Context mContext;
+        final Context mContext;
 
         NewsCallback(Context context) {
             super();
@@ -241,46 +221,6 @@ public class NewsActivity extends AppCompatActivity implements SharedPreferences
         public void onLoaderReset(Loader<List<News>> loader) {
             // Loader reset, so we can clear out our existing data.
             adapter.clear();
-        }
-
-    }
-
-    /**
-     * A LoaderManager with the purpose of reading the available sections from the server.
-     * This won't need to be refreshed as (hopefully) sections don't change a lot.
-     */
-    private class SectionCallback implements LoaderManager.LoaderCallbacks<ArrayList<Map
-            .Entry<String, String>>> {
-
-        Context mContext;
-
-        SectionCallback(Context context) {
-            super();
-            mContext = context;
-        }
-
-        @Override
-        public Loader<ArrayList<Map.Entry<String, String>>> onCreateLoader(int i, Bundle bundle) {
-            //URL for news data from the guardian api
-            String GUARDIAN_SECTION_URL = "https://content.guardianapis.com/sections?";
-            Uri baseUri = Uri.parse(GUARDIAN_SECTION_URL);
-            Uri.Builder uriBuilder = baseUri.buildUpon();
-            uriBuilder.appendQueryParameter("api-key", KEY);
-            // Create a new loader for the given URL
-            return new SectionLoader(mContext, uriBuilder.toString());
-        }
-
-        @Override
-        public void onLoadFinished(Loader<ArrayList<Map.Entry<String, String>>> loader,
-                                   ArrayList<Map.Entry<String, String>> sections) {
-            sectionClear();
-            mSections.addAll(sections);
-        }
-
-        @Override
-        public void onLoaderReset(Loader<ArrayList<Map.Entry<String, String>>> loader) {
-            // Loader reset, so we can clear out our existing data.
-            sectionClear();
         }
 
     }
